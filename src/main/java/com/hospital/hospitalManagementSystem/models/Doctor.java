@@ -1,14 +1,12 @@
 package com.hospital.hospitalManagementSystem.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -23,5 +21,14 @@ public class Doctor {
     private String email;
     private String specialization;
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "doctor")
+    private List<Appointment> appointment;
+
+    @OneToOne(mappedBy = "doctor")
+    private Department department;
+
+    @ManyToMany(mappedBy = "doctors")
+    private List<Department> departments;
 
 }

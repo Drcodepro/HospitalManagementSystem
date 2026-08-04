@@ -1,6 +1,4 @@
 package com.hospital.hospitalManagementSystem.models;
-
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -20,4 +18,12 @@ public class Appointment {
     private LocalDateTime appointmentTime;
     private String reason;
     private String status;
+
+    @ManyToOne
+    @JoinColumn
+    private Patient patient;
+
+    @ManyToOne
+    @JoinColumn
+    private Doctor doctor;
 }

@@ -8,6 +8,7 @@ import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -24,4 +25,10 @@ public class Patient {
     private String bloodGroup;
     private LocalDateTime createdAt;
 
+    @OneToOne
+    @JoinColumn()
+    private Insurance insurance;
+
+    @OneToMany(mappedBy = "patient")
+    private List<Appointment> appointment;
 }

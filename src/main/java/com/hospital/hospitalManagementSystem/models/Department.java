@@ -1,14 +1,13 @@
 package com.hospital.hospitalManagementSystem.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.print.Doc;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -20,5 +19,17 @@ public class Department {
     private Long id;
     private String name;
     private LocalDateTime createdAt;
+
+    @OneToOne
+    @JoinColumn
+    private Doctor doctor;
+
+    @ManyToMany
+    @JoinTable(
+            name = "department_doctor",
+            joinColumns = @JoinColumn(name = "department_id"),
+            inverseJoinColumns = @JoinColumn(name = "doctor_id")
+    )
+    private List<Doctor> doctors;
 
 }
