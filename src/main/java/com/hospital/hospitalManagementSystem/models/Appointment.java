@@ -1,8 +1,6 @@
 package com.hospital.hospitalManagementSystem.models;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -10,6 +8,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Getter
+@Setter
 public class Appointment {
 
     @Id
@@ -21,9 +21,13 @@ public class Appointment {
 
     @ManyToOne
     @JoinColumn
+    // While Printing it will prevent from StackOverflowException
+    @ToString.Exclude
     private Patient patient;
 
     @ManyToOne
     @JoinColumn
+    // StackoverflowException (doctor/patient toString again call for Appointment's toString())
+    @ToString.Exclude
     private Doctor doctor;
 }
