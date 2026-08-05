@@ -18,6 +18,7 @@ public class Department {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @OneToOne

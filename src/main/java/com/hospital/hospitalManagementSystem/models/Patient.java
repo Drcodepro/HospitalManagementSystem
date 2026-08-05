@@ -2,9 +2,8 @@ package com.hospital.hospitalManagementSystem.models;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import org.hibernate.engine.internal.Cascade;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,7 +12,9 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@Getter
+@Setter
+//@ToString
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,13 +23,20 @@ public class Patient {
     private String Gender;
     private LocalDate birthDate;
     private String email;
-    private String bloodGroup;
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @OneToOne
-    @JoinColumn()
+    // in production use ORDINAL that stores as number and uses less space
+    @Enumerated(EnumType.STRING)
+    private BloodGroupType bloodGroup;
+
+    // Cascade MERGE will update the child(Insurance) if parent(Patient) Entity updated
+    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @JoinColumn
     private Insurance insurance;
 
-    @OneToMany(mappedBy = "patient")
+    // orphanRemoval=true, if child doesn't have parent so delete it form DB
+    // example - if you removed any Appointment from List (patient.getAppointment.remove(apmt1)) so delete it from DB as well
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.REMOVE , orphanRemoval = true)
     private List<Appointment> appointment;
 }

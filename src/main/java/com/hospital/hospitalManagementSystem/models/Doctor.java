@@ -1,9 +1,7 @@
 package com.hospital.hospitalManagementSystem.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,6 +10,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Getter
+@Setter
 public class Doctor {
 
     @Id
@@ -20,6 +20,7 @@ public class Doctor {
     private String name;
     private String email;
     private String specialization;
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "doctor")
