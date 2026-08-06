@@ -61,4 +61,14 @@ public class AppointmentService {
 
     }
 
+    @Transactional
+    public void updateAppointment(Appointment appointment){
+        appointmentRepository.save(appointment);
+    }
+
+    @Transactional
+    public void deleteAppointment(Long appointment_id){
+        appointmentRepository.deleteById(appointment_id);
+    }
+
 }

@@ -25,7 +25,12 @@ public class AppointmentTest {
     }
 
     @Test
-    public void updateAppointment(){
+    public void updateAppointmentDoctor(){
         appointmentService.reAssignDoctorToAppointment(2L,7L);
+    }
+
+    @Test
+    public void deleteAppointment(){
+        appointmentService.deleteAppointment(2L);
     }
 }
