@@ -1,7 +1,9 @@
 package com.hospital.hospitalManagementSystem.services;
 
+import com.hospital.hospitalManagementSystem.models.Appointment;
 import com.hospital.hospitalManagementSystem.models.Insurance;
 import com.hospital.hospitalManagementSystem.models.Patient;
+import com.hospital.hospitalManagementSystem.repositories.AppointmentRepository;
 import com.hospital.hospitalManagementSystem.repositories.InsuranceRepository;
 import com.hospital.hospitalManagementSystem.repositories.PatientRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -16,9 +18,10 @@ public class InsuranceService {
 
     private final InsuranceRepository insuranceRepository;
     private final PatientRepository patientRepository;
+    private final AppointmentRepository appointmentRepository;
 
     @Transactional
-    public void addInsuranceToPatient(Insurance insurance, Long patient_id){
+    public void addInsurance(Insurance insurance, Long patient_id){
 
         Patient patient = patientRepository.findById(patient_id).orElseThrow(
                 ()-> new EntityNotFoundException("patient not found with Id: " + patient_id )
@@ -31,6 +34,19 @@ public class InsuranceService {
         insurance.setPatient(patient);
 
         System.out.println(patient);
+    }
+
+
+    @Transactional
+    public void deleteInsurance(Long insurance_id){
+
+        Insurance insurance = insuranceRepository.findById(insurance_id)
+                .orElseThrow(() -> new EntityNotFoundException("Insurance not found with ID: " + insurance_id));
+
+        Patient patient = insurance.getPatient();
+        patient.setInsurance(null);
+
+        insuranceRepository.delete(insurance);
     }
 
 }

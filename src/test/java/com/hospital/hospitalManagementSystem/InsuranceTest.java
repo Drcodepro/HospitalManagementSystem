@@ -24,6 +24,11 @@ public class InsuranceTest {
         insurance.setPolicyNumber("TATALife_473");
 
       // call the service method to add insurance to patient
-        insuranceService.addInsuranceToPatient(insurance,2L);
+        insuranceService.addInsurance(insurance,2L);
+    }
+
+    @Test
+    public void deleteInsurance(){
+        insuranceService.deleteInsurance(2L);
     }
 }
