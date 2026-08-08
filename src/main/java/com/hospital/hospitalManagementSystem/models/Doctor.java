@@ -23,7 +23,7 @@ public class Doctor {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "doctor")
+    @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Appointment> appointment;
 
     @OneToOne(mappedBy = "doctor")

@@ -18,10 +18,10 @@ public class AppointmentTest {
     @Test
     public void TestAppointment(){
         Appointment appointment = new Appointment();
-        appointment.setAppointmentTime(LocalDateTime.now());
-        appointment.setReason("chest pain");
+        appointment.setAppointmentTime(LocalDateTime.of(2026, 8, 12, 10, 0, 0));
+        appointment.setReason("Head each");
         appointment.setStatus("pending");
-        appointmentService.createAppointment(appointment,1L,2L);
+        appointmentService.createAppointment(appointment,11L,4L);
     }
 
     @Test
