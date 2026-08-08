@@ -31,12 +31,12 @@ public class Patient {
     private BloodGroupType bloodGroup;
 
     // Cascade MERGE will update the child(Insurance) if parent(Patient) Entity updated
-    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn
     private Insurance insurance;
 
-    // orphanRemoval=true, if child doesn't have parent so delete it form DB
-    // example - if you removed any Appointment from List (patient.getAppointment.remove(apmt1)) so delete it from DB as well
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.REMOVE , orphanRemoval = true)
+    // CascadeType.Remove =  if parent is deleted then child(appointments) also gets deleted from DB
+    // orphanRemoval=true == if you removed any Appointment from List (patient.getAppointment.remove(apmt1)) so delete it from DB as well
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Appointment> appointment;
 }

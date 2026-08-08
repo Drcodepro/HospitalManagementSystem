@@ -16,15 +16,15 @@ public class InsuranceTest {
     InsuranceService insuranceService;
 
     @Test
-    public void testInsurance(){
+    public void addInsuranceToPatient(){
         Insurance insurance = new Insurance();
         insurance.setProvider("TATALife");
         insurance.setCreatedAt(LocalDateTime.now());
         insurance.setValidUntil(LocalDate.of(2030,8,3));
-        insurance.setPolicyNumber("TATALife_473");
+        insurance.setPolicyNumber("TATALife_136");
 
       // call the service method to add insurance to patient
-        insuranceService.addInsurance(insurance,2L);
+        insuranceService.addInsurance(insurance,21L);
     }
 
     @Test
