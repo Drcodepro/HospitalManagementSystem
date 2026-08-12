@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class Insurance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String policyNumber;
     private String provider;
     private LocalDate validUntil;

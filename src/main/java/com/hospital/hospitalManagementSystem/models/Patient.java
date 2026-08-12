@@ -4,6 +4,7 @@ package com.hospital.hospitalManagementSystem.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.engine.internal.Cascade;
 
 import java.time.LocalDate;
@@ -19,12 +20,13 @@ import java.util.List;
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String name;
-    private String Gender;
+    private String gender;
     private LocalDate birthDate;
     private String email;
-    @Column(nullable = false, updatable = false)
+    @CreationTimestamp
+    @Column(nullable = true, updatable = false)
     private LocalDateTime createdAt;
 
     // in production use ORDINAL that stores as number and uses less space
@@ -34,6 +36,7 @@ public class Patient {
     // Cascade MERGE will update the child(Insurance) if parent(Patient) Entity updated
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn
+    @JsonIgnore
     private Insurance insurance;
 
     // CascadeType.Remove =  if parent is deleted then child(appointments) also gets deleted from DB

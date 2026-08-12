@@ -30,7 +30,7 @@ public class AppointmentController {
     }
 
     @PostMapping("/doctors/{doctorId}/patients/{patientId}")
-    public ResponseEntity<Appointment> CreateAppointment(
+    public ResponseEntity<Appointment> createAppointment(
             @RequestBody Appointment appointment,
             @PathVariable("doctorId") Long doctorId,
             @PathVariable("patientId") Long patientId

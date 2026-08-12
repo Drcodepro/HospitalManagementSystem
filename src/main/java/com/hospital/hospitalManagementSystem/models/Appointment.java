@@ -14,7 +14,7 @@ public class Appointment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private LocalDateTime appointmentTime;
     private String reason;
     private String status;

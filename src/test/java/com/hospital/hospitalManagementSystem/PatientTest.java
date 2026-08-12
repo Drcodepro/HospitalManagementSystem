@@ -28,7 +28,6 @@ public class PatientTest {
         patient.setGender("Male");
         patient.setBirthDate(LocalDate.of(2002,11,2));
         patient.setBloodGroup(BloodGroupType.B_POSITIVE);
-        patient.setCreatedAt(LocalDateTime.now());
 
         patientService.savePatient(patient);
     }
