@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.print.Doc;
+import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +26,17 @@ public class AppointmentService {
     private final PatientRepository patientRepository;
 
     @Transactional
-    public void createAppointment(Appointment appointment,Long doctor_id, Long patient_id){
+    public List<Appointment> fetchAllAppointments(){
+        return appointmentRepository.findAll();
+    }
+
+    @Transactional
+    public Appointment fetchAppointment(Long appointment_id){
+        return appointmentRepository.findById(appointment_id).orElseThrow(()-> new EntityNotFoundException("Appointment is not present with id - "+appointment_id));
+    }
+
+    @Transactional
+    public Appointment createAppointment(Appointment appointment,Long doctor_id, Long patient_id){
         Doctor doctor = doctorRepository.findById(doctor_id).orElseThrow(()-> new EntityNotFoundException("Doctor not found : "+ doctor_id));
         Patient patient = patientRepository.findById(patient_id).orElseThrow(()-> new EntityNotFoundException("Patient not found : "+ patient_id));
 
@@ -39,14 +51,12 @@ public class AppointmentService {
         patient.getAppointment().add(appointment);
 
         // have to save the appointment because this is child Entity, JPA will not add this automatically in DB
-        appointmentRepository.save(appointment);
-
-//        System.out.println(appointment);
+       return appointmentRepository.save(appointment);
     }
 
 
     @Transactional
-    public void reAssignDoctorToAppointment(Long appointment_id, Long newDoctor_id){
+    public Appointment reAssignDoctorToAppointment(Long appointment_id, Long newDoctor_id){
         Appointment appointment = appointmentRepository.findById(appointment_id).orElseThrow(()->new EntityNotFoundException("Appointment not found in DB"));
         Doctor doctor = doctorRepository.findById(newDoctor_id).orElseThrow(()->new EntityNotFoundException("doctor not found in DB"));
 
@@ -59,11 +69,13 @@ public class AppointmentService {
         // delete the existing appointment form doctor's appointment-list
         doctor.getAppointment().remove(appointment);
 
+        return appointmentRepository.findById(appointment_id).orElseThrow(()->new EntityNotFoundException("Entity not found in DB with id - "+ appointment_id));
     }
 
     @Transactional
-    public void updateAppointment(Appointment appointment){
-        appointmentRepository.save(appointment);
+    public Appointment updateAppointment(Appointment appointment){
+        Appointment newAppointment = appointmentRepository.save(appointment);
+        return newAppointment;
     }
 
     @Transactional

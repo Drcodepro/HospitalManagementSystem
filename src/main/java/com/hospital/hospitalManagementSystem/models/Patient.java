@@ -1,6 +1,7 @@
 package com.hospital.hospitalManagementSystem.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.engine.internal.Cascade;
@@ -38,5 +39,6 @@ public class Patient {
     // CascadeType.Remove =  if parent is deleted then child(appointments) also gets deleted from DB
     // orphanRemoval=true == if you removed any Appointment from List (patient.getAppointment.remove(apmt1)) so delete it from DB as well
     @OneToMany(mappedBy = "patient", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnore
     private List<Appointment> appointment;
 }

@@ -1,5 +1,6 @@
 package com.hospital.hospitalManagementSystem.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,6 +25,7 @@ public class Doctor {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Appointment> appointment;
 
     @OneToOne(mappedBy = "doctor")
@@ -33,3 +35,4 @@ public class Doctor {
     private List<Department> departments;
 
 }
+
